@@ -10,7 +10,7 @@ Extract information from infobox
 ================================
 Extract DOB, birthplace, DOD and deathplace
 -------------------------------------------
-`:information_source:` The script can be found at TODO `extract_born_and_died_from_infobox.py <>`_
+`:information_source:` The script can be found at `extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_
 
 This is the environment on which the script was tested:
 
