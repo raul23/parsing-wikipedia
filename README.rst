@@ -37,8 +37,8 @@ For example: `wikipedia.org/wiki/Edward_Teller <https://en.wikipedia.org/wiki/Ed
 
 |
 
-Part 2: Search for the infobox labels for 'Born' and 'Died'
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Part 2: Search for the infobox labels 'Born' and 'Died'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Once an infobox was found within a Wikipedia page, we can search for the desired infobox labels, in this case: 'Born' and 'Died'.
 
 .. code-block:: python
