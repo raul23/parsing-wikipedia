@@ -76,3 +76,25 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
    
     <tbody> <tr> <td class='infobox-data'>"January 15, 1908"</td>
 5. If the infobox label is the correct one ('Born' or 'Died'), then it will be processed accordingly to remove the dates
+
+|
+
+Part 3: Get the DOB
+"""""""""""""""""""
+Method #1: ``.bday`` (simplest)
+'''''''''''''''''''''''''''''''
+Method #2: ``YYYY-MM-DD``, e.g. 1500-01-19
+''''''''''''''''''''''''''''''''''''''''''
+Method #3: ``Month Day, Year``, e.g. January 19, 1500
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Method #4: ``Day Month Year``, e.g. 19 January 1500
+'''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Part 4: Get the birth place
+"""""""""""""""""""""""""""
+
+Part 5: Get the DOD
+"""""""""""""""""""
+
+Part 6: Get the death place
+"""""""""""""""""""""""""""
