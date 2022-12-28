@@ -1,6 +1,6 @@
-=========
-Wikipedia
-=========
+=======================
+Parsing Wikipedia pages
+=======================
 .. contents:: **Contents**
    :depth: 4
    :local:
