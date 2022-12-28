@@ -66,7 +66,8 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
     <tbody> <tr> <th class='infobox-label'>Born</th>
  
 2. ``th_tags`` is a list containing all the labels of an infobox table which we iterate until we find an infobox label (i.e. it is not ``None``)
-3. Cleanup the infobox label a little bit by removing non-breaking spaces (``\xa0``) with ``unicodedata`` 
+3. Cleanup the infobox label a little bit by removing non-breaking spaces (``\xa0``) with Python built-il module 
+   `unicodedata.normalize <https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize>` 
    (see `stackoverflow.com/a/48286252 <https://stackoverflow.com/a/48286252>`_
 4. Get the infobox data associated with the given label by retrieving it from ``<th>``'s parent which is a ``<tr>`` tag. From this ``<tr>`` tag, 
    you can get the infobox data within a ``<td>`` tag
