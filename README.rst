@@ -177,8 +177,29 @@ Method #5: ``Day Month Year``, e.g. 19 January 1500
         fourth_date = None
     dates['fourth_date'] = fourth_date
 
-Part 4: Get the birth place
-"""""""""""""""""""""""""""
+Part 4: Get the birth and death places
+""""""""""""""""""""""""""""""""""""""
+`:information_source:` The extraction of the birth and death places are done within the function `extract_place(td_tag, kind_place='birthplace') <./scripts/extract_born_and_died_from_infobox.py#L15>`_
 
-Part 5: Get the death place
-"""""""""""""""""""""""""""
+|
+
+.. code-block:: python
+
+   def extract_place(td_tag, kind_place='birthplace'):
+       text = td_tag.text
+       if td_tag.select(f'.{kind_place}'):
+           place = clean_data(td_tag.select(f'.{kind_place}')[0].text)
+       else:
+           if 'aged' in text:
+               # e.g. February 8, 1957(1957-02-08) (aged 53)Washington, D.C., U.S.
+               match = re.search(r"aged\s*\d+\)(.*)$", text, re.MULTILINE)
+           else:
+               # Get the birthplace/deathplace after the DOB/DOD year
+               # e.g. Neumann János Lajos(1903-12-28)December 28, 1903Budapest, Kingdom of Hungary, Austria-Hungary
+               match = re.search(r",\s*\d+(.*)$", text, re.MULTILINE)
+           if match:
+               place = match.groups()[0]
+           else:
+               place = None
+       return place
+
