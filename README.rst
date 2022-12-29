@@ -212,7 +212,7 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
 
 1. An infobox label associated with a row in an infobox table is found within the ``<th>`` tag with the ``.infobox-label`` class
    
-   Thus the infobox label is found in the following *HTML* structure::
+   Thus the infobox label 'Born' is found in the following *HTML* structure::
    
     <tbody> <tr> <th class='infobox-label'>Born</th>
  
