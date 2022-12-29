@@ -367,6 +367,8 @@ Method #5: ``Month Day, Year``, e.g. January 19, 1500
  - Named groups are used when building the long regex so it is easier to reconstruct the date afterward with the correct format, especially if the
    initial date had more than one space between its different parts, e.g. ``January 19,     2019``.
 
+|
+
 Method #6: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
