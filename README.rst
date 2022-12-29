@@ -428,7 +428,7 @@ Since the code for the ``extract_place()`` function is simple, all three methods
 
  1. The ``kind_place`` parameter takes two values: 'birthplace' or 'deathplace'
  2. The **first method** used to retrieve the birthplace/deathplace is by searching for any tag (``<div>``) with the 
-    ``birthplace``|``deathplace`` class. The text for this ``<div>`` tag is the place we are looking for.
+    ``birthplace|deathplace`` class. The text for this ``<div>`` tag is the place we are looking for.
     
     The 'birthplace' or 'deathplace' is found in the following *HTML* structure::
     
