@@ -201,18 +201,19 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
 
 .. code-block:: python
 
-    # Found infobox. Now search for the desired infobox labels
-    th_tags = tab_tag[0].select('tbody > tr > .infobox-label')
-    for th_tag in th_tags:
-        infobox_label = th_tag.string
-        if infobox_label is None:
-            continue
-        infobox_label = unicodedata.normalize('NFC', infobox_label)
-        td_tag = th_tag.parent.select('.infobox-data')[0]
-        if infobox_label == 'Born':
-            # Process content associated with the 'Born' label
-        elif infobox_label == 'Died':
-            # Process content associated with the 'Died' label
+   # Found infobox. Now search for the desired infobox labels
+   th_tags = tab_tag[0].select('tbody > tr > .infobox-label')
+   for th_tag in th_tags:
+       infobox_label = th_tag.string
+       if infobox_label is None:
+           continue
+       infobox_label = unicodedata.normalize('NFC', infobox_label)
+       # From the <tr> tag, get the infobox-data containing the relevant Born or Died information
+       td_tag = th_tag.parent.select('.infobox-data')[0]
+       if infobox_label == 'Born':
+           # Process content associated with the 'Born' label
+       elif infobox_label == 'Died':
+           # Process content associated with the 'Died' label
 
 `:information_source:` Explanation of the above Python code used for retrieving infobox labels
 
@@ -224,8 +225,9 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
  
 2. ``th_tags`` is a list containing all the labels of an infobox table which we iterate until we find an infobox label (i.e. it is not ``None``).
 3. Cleanup the infobox label a little bit by removing non-breaking spaces (``\xa0``) with Python built-in module 
-   `unicodedata.normalize <https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize>`_
-   (For more information, check `stackoverflow.com/a/48286252 <https://stackoverflow.com/a/48286252>`_).
+   `unicodedata.normalize or even ``replace('\xa0', ' ')`` could do the job. On `stackoverflow 
+   <https://stackoverflow.com/a/48286252>`_, they highly recommend to use `unicodedata.normalize 
+   <https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize>`_ but I also had success with ``replace()``.
 4. Get the infobox data associated with the given label by retrieving it from ``<th>``'s parent which is a ``<tr>`` tag. From this ``<tr>`` tag, 
    you can get the infobox data within a ``<td>`` tag. The infobox data contains the useful information we are looking to extract
    for a given label, e.g. the DOB and birthplace.
