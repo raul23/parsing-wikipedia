@@ -287,7 +287,7 @@ Method #2: ``YYYY`` at the beginning, e.g. 1900
 `:information_source:` 
 
  - The text to be search on is first cleaned up (i.e. removing any citation number/text within square brackets 
-   and non-breaking spaces, see the `clean_data(data) <./scripts/extract_born_and_died_from_infobox.py#L13>`_ function).
+   and non-breaking spaces; see the `clean_data(data) <./scripts/extract_born_and_died_from_infobox.py#L13>`_ function).
  - The second method searches the text from the given ``<td>`` tag for any pattern of number with 3 or 4 digits at the 
    beginning of the text, e.g. 1944 (age 77–78).
  - The reason for specifying the number of digits in the regex is that if we don't then we might also catch numbers that 
