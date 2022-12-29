@@ -52,8 +52,7 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
         if infobox_label is None:
             continue
         infobox_label = unicodedata.normalize('NFKD', infobox_label)
-        infobox_data = th_tag.parent.select('.infobox-data')[0]
-        td_tag = infobox_data
+        td_tag = th_tag.parent.select('.infobox-data')[0]
         if infobox_label == 'Born':
             # Process content associated with the 'Born' label
         elif infobox_label == 'Died':
@@ -89,6 +88,11 @@ The simplest method for retrieving the DOB in an infobox is to look for it in a 
 `HTML code <https://en.wikipedia.org/wiki/Abdus_Salam>`_::
 
  <td class="infobox-data"><span style="display:none">(<span class="bday">1926-01-29</span>)</span>
+
+|
+
+Python code that search starting from the ``<td>`` tag (explained in `section 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_) any
+tag (``<span>``) with the ``bday`` class:
 
 .. code-block:: python
 
