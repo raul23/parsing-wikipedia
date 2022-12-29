@@ -434,7 +434,7 @@ Since the code for the ``extract_place()`` function is simple, all three methods
     
      <div style="display:inline" class="birthplace">Moscow, Russia</div>
  3. The **second method** only applies to the extraction of the deathplace. It searches the text from the ``<td>`` tag 
-    (see `Part 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_) for any string that follows the word aged plus any number
+    (see `Part 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_) for any string that follows the word 'aged' plus any number
     of spaces and a closed parenthesis, e.g. aged 53)Washington, D.C., U.S. This string should be the deathplace we are searching for.
  4. The **third method** retrieves the birthplace/deathplace by searching the same text like in the secod method but looks for any
     string that follows a comma followed by any number of spaces and the year, e.g. 28, 1903Budapest, Kingdom of Hungary, 
