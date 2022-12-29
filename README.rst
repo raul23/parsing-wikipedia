@@ -405,7 +405,7 @@ Method #6: ``Day Month Year``, e.g. 19 January 1500
 
  - The sixth method searches the text from the given ``<td>`` tag for any pattern of text respecting the
    format ``Day Month Year``.
- - The same explanations for the `fifth method <#method-5-month-day-year-e-g-january-19-1500>`_ applies here so we won't repeat them.
+ - The same explanation for the `fifth method <#method-5-month-day-year-e-g-january-19-1500>`_ applies here so we won't repeat them.
 
 |
 
