@@ -273,6 +273,8 @@ Method #2: ``YYYY`` at the beginning, e.g. 1900
            first_date = None
        dates['first_date'] = first_date
 
+|
+
 Method #3: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
@@ -284,6 +286,8 @@ Method #3: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
     else:
         second_date = None
     dates['second_date'] = second_date
+
+|
 
 Method #4: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -305,6 +309,8 @@ Method #4: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
                 break
     dates['third_date'] = third_date
 
+|
+
 Method #5: ``Month Day, Year``, e.g. January 19, 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
@@ -321,6 +327,8 @@ Method #5: ``Month Day, Year``, e.g. January 19, 1500
     else:
         fourth_date = None
     dates['fourth_date'] = fourth_date
+
+|
 
 Method #6: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -340,6 +348,8 @@ Method #6: ``Day Month Year``, e.g. 19 January 1500
     else:
         fifth_date = None
     dates['fifth_date'] = fifth_date
+
+|
 
 Part 4: Get the birth and death places
 """"""""""""""""""""""""""""""""""""""
