@@ -257,13 +257,17 @@ Python code that searches any tag (``<span>``) with the ``bday`` class starting 
 .. code-block:: python
 
     if td_tag.select('.bday'):
-       dob = td_tag.select('.bday')[0].string
+       dob = clean_data(td_tag.select('.bday')[0].string)
    else:
        # Use other methods to retrieve the DOB
        dob = None
 
-`:information_source:` If no DOB could be found with this simple method, then other more complex methods involving regex will be deployed as it is
-explained in the following sections.
+`:information_source:` 
+
+ - If no DOB could be found with this simple method, then other more complex methods involving regex will be deployed as it is
+   explained in the following sections.
+ - The found DOB is `cleaned up <./scripts/extract_born_and_died_from_infobox.py#L13>`_ by removing any citation 
+   number/text within square brackets and non-breaking spaces.
 
 |
 
@@ -288,6 +292,7 @@ Method #2: ``YYYY`` at the beginning, e.g. 1900
 
  - The text to be search on is first cleaned up (i.e. removing any citation number/text within square brackets 
    and non-breaking spaces; see the `clean_data(data) <./scripts/extract_born_and_died_from_infobox.py#L13>`_ function).
+   This cleaned text will also be used by methods 3, 5 and 6.
  - The second method searches the text from the given ``<td>`` tag for any pattern of number with 3 or 4 digits at the 
    beginning of the text, e.g. 1944 (age 77–78).
  - The reason for specifying the number of digits in the regex is that if we don't then we might also catch numbers that 
@@ -416,17 +421,14 @@ Since the code for the ``extract_place()`` function is simple, all three methods
 
    def extract_place(td_tag, kind_place='birthplace'):
        assert kind_place in ['birthplace', 'deathplace']
-       text = td_tag.text
-       # Method 1
        if td_tag.select(f'.{kind_place}'):
            place = clean_data(td_tag.select(f'.{kind_place}')[0].text)
        else:
-           # Method 2
+           text = clean_data(td_tag.text)
            if 'aged' in text:
                # e.g. February 8, 1957(1957-02-08) (aged 53)Washington, D.C., U.S.
                match = re.search(r"aged\s*\d+\)(.*)$", text, re.MULTILINE)
            else:
-               # Method 3
                # Get the birthplace/deathplace after the DOB/DOD year
                # e.g. Neumann János Lajos(1903-12-28)December 28, 1903Budapest, Kingdom of Hungary, Austria-Hungary
                match = re.search(r",\s*\d+(.*)$", text, re.MULTILINE)
@@ -434,20 +436,21 @@ Since the code for the ``extract_place()`` function is simple, all three methods
                place = match.groups()[0]
            else:
                place = None
-       return place
+    return place
 
 `:information_source:`
 
  1. The ``kind_place`` parameter takes two values: 'birthplace' or 'deathplace'.
- 2. The **first method** used to retrieve the birthplace/deathplace searches for any tag (``<div>``) with the 
+ 2. The text that is used by all methods is first `cleaned up <./scripts/extract_born_and_died_from_infobox.py#L13>`_ like usual.
+ 3. The **first method** used to retrieve the birthplace/deathplace searches for any tag (``<div>``) with the 
     ``birthplace|deathplace`` class. The text for this ``<div>`` tag is the place we are looking for.
     
     The 'birthplace' or 'deathplace' is found in the following *HTML* structure::
     
      <div style="display:inline" class="birthplace">Moscow, Russia</div>
- 3. The **second method** only applies to the extraction of the deathplace. It searches the text from the ``<td>`` tag 
+ 4. The **second method** only applies to the extraction of the deathplace. It searches the text from the ``<td>`` tag 
     (see `Part 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_) for any string that follows the word 'aged' plus any number
     of spaces and a closed parenthesis, e.g. ``aged 53)Washington, D.C., U.S.`` This string should be the deathplace we are searching for.
- 4. The **third method** retrieves the birthplace/deathplace by searching the same text like in the secod method but looks for any
+ 5. The **third method** retrieves the birthplace/deathplace by searching the same text like in the secod method but looks for any
     string that follows a comma followed by any number of spaces and the year, e.g. ``28, 1903Budapest, Kingdom of Hungary, 
     Austria-Hungary``. This string should be the birthplace/deathplace we are looking for.
