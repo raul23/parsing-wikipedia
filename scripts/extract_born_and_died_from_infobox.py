@@ -13,6 +13,7 @@ def clean_data(data):
 
 
 def extract_place(td_tag, kind_place='birthplace'):
+    assert kind_place in ['birthplace', 'deathplace']
     if td_tag.select(f'.{kind_place}'):
         place = clean_data(td_tag.select(f'.{kind_place}')[0].text)
     else:
