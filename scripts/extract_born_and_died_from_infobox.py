@@ -1,12 +1,13 @@
+#!/usr/bin/env python
 import os
 import re
+import sys
 import unicodedata
 from pathlib import Path
 
 from bs4 import BeautifulSoup
 
 # import ipdb
-input_directory = Path(os.path.expanduser('~/Data/wikipedia/physicists'))
 
 
 def clean_data(data):
@@ -105,49 +106,51 @@ def extract_dates(td_tag):
     return dates
 
 
-number_infobox = 0
-for i, filepath in enumerate(input_directory.rglob('*.html'), start=1):
-    print('############################')
-    print(f'Processing page {i}: {filepath.name}\n')
-    if False and '' not in filepath.name:  # Debug code
-        continue
-    with open(filepath, 'r') as f:
-        text = f.read()
-    bs = BeautifulSoup(text, 'html.parser')
-    b_tag = bs.select('p > b')
-    tab_tag = bs.select('.infobox.vcard')
-    if tab_tag:
-        # Found infobox
-        number_infobox += 1
-        th_tags = tab_tag[0].select('tbody > tr > .infobox-label')
-        for th_tag in th_tags:
-            infobox_label = th_tag.string
-            if infobox_label is None:
-                continue
-            # Clean infobox label by replacing \xa0 with ' '
-            # \xa0 is actually non-breaking space in Latin1 (ISO 8859-1), also chr(160)
-            # Ref.: https://stackoverflow.com/a/11566398
-            infobox_label = unicodedata.normalize('NFKD', infobox_label)
-            # From the <tr> tag, get the infobox-data containing the relevant Born or Died information
-            td_tag = th_tag.parent.select('.infobox-data')[0]
-            if infobox_label == 'Born':
-                if td_tag.select('.bday'):
-                    dob = td_tag.select('.bday')[0].string
-                else:
-                    dob = None
-                print('DOB extraction from different methods')
-                print(f'1st method: {dob}')
-                extract_dates(td_tag)
-                birthplace = extract_place(td_tag)
-                print(f'Birthplace: {birthplace}\n')
-            elif infobox_label == 'Died':
-                print('DOD extraction from different methods')
-                extract_dates(td_tag)
-                deathplace = extract_place(td_tag, 'deathplace')
-                print(f'Deathplace: {deathplace}')
-    print('############################\n\n\n')
+if __name__ == '__main__':
+    number_infobox = 0
+    input_directory = Path(os.path.expanduser(sys.argv[1]))
+    for i, filepath in enumerate(input_directory.rglob('*.html'), start=1):
+        print('############################')
+        print(f'Processing page {i}: {filepath.name}\n')
+        if False and '' not in filepath.name:  # Debug code
+            continue
+        with open(filepath, 'r') as f:
+            text = f.read()
+        bs = BeautifulSoup(text, 'html.parser')
+        b_tag = bs.select('p > b')
+        tab_tag = bs.select('.infobox.vcard')
+        if tab_tag:
+            # Found infobox
+            number_infobox += 1
+            th_tags = tab_tag[0].select('tbody > tr > .infobox-label')
+            for th_tag in th_tags:
+                infobox_label = th_tag.string
+                if infobox_label is None:
+                    continue
+                # Clean infobox label by replacing \xa0 with ' '
+                # \xa0 is actually non-breaking space in Latin1 (ISO 8859-1), also chr(160)
+                # Ref.: https://stackoverflow.com/a/11566398
+                infobox_label = unicodedata.normalize('NFKD', infobox_label)
+                # From the <tr> tag, get the infobox-data containing the relevant Born or Died information
+                td_tag = th_tag.parent.select('.infobox-data')[0]
+                if infobox_label == 'Born':
+                    if td_tag.select('.bday'):
+                        dob = td_tag.select('.bday')[0].string
+                    else:
+                        dob = None
+                    print('DOB extraction from different methods')
+                    print(f'1st method: {dob}')
+                    extract_dates(td_tag)
+                    birthplace = extract_place(td_tag)
+                    print(f'Birthplace: {birthplace}\n')
+                elif infobox_label == 'Died':
+                    print('DOD extraction from different methods')
+                    extract_dates(td_tag)
+                    deathplace = extract_place(td_tag, 'deathplace')
+                    print(f'Deathplace: {deathplace}')
+        print('############################\n\n\n')
+        # ipdb.set_trace()
     # ipdb.set_trace()
-# ipdb.set_trace()
 
-# 497 infoboxes over 641 wikipedia pages (78%) when using infobox.biography.vcard
-# 506 infoboxes over 641 wikipedia pages (79%) when using infobox..vcard
+    # 497 infoboxes over 641 wikipedia pages (78%) when using infobox.biography.vcard
+    # 506 infoboxes over 641 wikipedia pages (79%) when using infobox..vcard
