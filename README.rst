@@ -33,7 +33,7 @@ Sample output of the script::
    3rd method: 1908-01-22
    4th method: 1908-01-22
    5th method: None
-   6th method: 22 january 1908
+   6th method: 22 January 1908
    Birthplace: Baku, Baku Governorate, Russian Empire
 
    DOD extraction from different methods
@@ -41,7 +41,7 @@ Sample output of the script::
    3rd method: 1968-04-01
    4th method: 1968-04-01
    5th method: None
-   6th method: 1 april 1968
+   6th method: 1 April 1968
    Deathplace: Moscow, Russian SFSR, Soviet Union
    ############################
 
@@ -56,7 +56,7 @@ Sample output of the script::
    3rd method: 1892-08-15
    4th method: 1892-08-15
    5th method: None
-   6th method: 15 august 1892
+   6th method: 15 August 1892
    Birthplace: Dieppe, France
 
    DOD extraction from different methods
@@ -64,7 +64,7 @@ Sample output of the script::
    3rd method: 1987-03-19
    4th method: 1987-03-19
    5th method: None
-   6th method: 19 march 1987
+   6th method: 19 March 1987
    Deathplace: Louveciennes, France
    ############################
 
@@ -79,7 +79,7 @@ Sample output of the script::
    3rd method: 1844-02-20
    4th method: 1844-02-20
    5th method: None
-   6th method: 20 february 1844
+   6th method: 20 February 1844
    Birthplace: Vienna, Austrian Empire
 
    DOD extraction from different methods
@@ -87,7 +87,7 @@ Sample output of the script::
    3rd method: 1906-09-05
    4th method: 1906-09-05
    5th method: None
-   6th method: 5 september 1906
+   6th method: 5 September 1906
    Deathplace: Tybein, Triest, Austria-Hungary
    ############################
 
@@ -102,7 +102,7 @@ Sample output of the script::
    3rd method: 1882-12-11
    4th method: 1882-12-11
    5th method: None
-   6th method: 11 december 1882
+   6th method: 11 December 1882
    Birthplace: Breslau, German Empire
 
    DOD extraction from different methods
@@ -110,7 +110,7 @@ Sample output of the script::
    3rd method: 1970-01-05
    4th method: 1970-01-05
    5th method: None
-   6th method: 5 january 1970
+   6th method: 5 January 1970
    Deathplace: Göttingen, West Germany
    ############################
 
@@ -148,7 +148,7 @@ Sample output of the script::
    3rd method: 1902-08-08
    4th method: 1902-08-08
    5th method: None
-   6th method: 8 august 1902
+   6th method: 8 August 1902
    Birthplace: Bristol, England
 
    DOD extraction from different methods
@@ -156,7 +156,7 @@ Sample output of the script::
    3rd method: 1984-10-20
    4th method: 1984-10-20
    5th method: None
-   6th method: 20 october 1984
+   6th method: 20 October 1984
    Deathplace: Tallahassee, Florida, U.S.
    ############################
 
@@ -199,7 +199,7 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
         infobox_label = th_tag.string
         if infobox_label is None:
             continue
-        infobox_label = unicodedata.normalize('NFKD', infobox_label)
+        infobox_label = unicodedata.normalize('NFC', infobox_label)
         td_tag = th_tag.parent.select('.infobox-data')[0]
         if infobox_label == 'Born':
             # Process content associated with the 'Born' label
@@ -230,7 +230,7 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
 
 Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
-`:information_source:` Methods 2-6 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L34>`_
+`:information_source:` Methods 2-6 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L35>`_
 
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
@@ -273,10 +273,17 @@ Method #2: ``YYYY`` at the beginning, e.g. 1900
            first_date = None
        dates['first_date'] = first_date
 
+`:information_source:` 
+
+ - The second method searches the text from the given ``<td>`` tag for any pattern of number with 3 or 4 digits at the 
+   beginning of the text, e.g. 1944 (age 77–78)
+ - The reason for specifying the number of digits in the regex is that if we don't then we might also catch numbers that 
+   correspond to the day of the DOB/DOD, e.g. 20 October 1984
+
 |
 
-Method #3: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
-'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Method #3: ``YYYY-MM-DD`` with regex only, e.g. 1500-01-19
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
     # Date pattern #2: YYYY-MM-DD with regex
@@ -287,10 +294,17 @@ Method #3: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
         second_date = None
     dates['second_date'] = second_date
 
+`:information_source:` 
+
+ - The third method searches the text from the given ``<td>`` tag for any pattern of numbers respecting the
+   format ``YYYY-MM-DD`` with the year part starting at year 1 and for the other parts (month and day) having one or two digits.
+ - Dates that should be matched: ``15-1-2`` and ``1987-08-12``
+ - Dates that should not be matched: ``1947-123-2`` and ``-11-10``
+
 |
 
-Method #4: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Method #4: ``YYYY-MM-DD`` with ``<span>``, e.g. 1500-01-19
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
     # Date pattern #3: YYYY-MM-DD without regex
@@ -309,6 +323,16 @@ Method #4: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
                 break
     dates['third_date'] = third_date
 
+`:information_source:` 
+
+ 1. The fourth method selects all the ``<span>`` tags starting from the given ``<td>`` tag. The first of these ``<span>`` tag that
+    has the `style='display:none'` attribute gets analyzed further.
+ 2. The text found within this ``<span>`` tag gets cleaned up (removing any citation number/text within square brackets and so one, see
+    the `clean_data(data) <#scripts/extract_born_and_died_from_infobox.py#L11>`_ function) and its parentheses are removed. 
+    
+    Example: '(2001-01-15)' --> '2001-01-15'
+ 3. Finally, just to make sure that the found date is in the correct format (YYYY-MM-DD), it is analyzed with a regex and if it is found
+    to be a valid date then it is retained.
 |
 
 Method #5: ``Month Day, Year``, e.g. January 19, 1500
@@ -320,15 +344,24 @@ Method #5: ``Month Day, Year``, e.g. January 19, 1500
             r"november|december)\s*((?P<day>\d+)),\s*(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        fourth_date = match.group().capitalize()
-        # Keep only one space between parts of date
-        subst = "\\g<month> \\g<day>, \\g<year>"
-        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
+        day = match.groupdict()['day']
+        month = match.groupdict()['month'].capitalize()
+        year = match.groupdict()['year']
+        fourth_date = f'{month} {day}, {year}'
     else:
         fourth_date = None
     dates['fourth_date'] = fourth_date
 
 |
+
+`:information_source:` 
+
+ - The fifth method searches the text from the given ``<td>`` tag for any pattern of text respecting the
+   format ``Month Day, Year``.
+ - The text searched by the regex is first put all in lowercase so we can take into account cases where the dates 
+   were entered with any of letters of the month capitalized, e.g. JAnury 19, 2019 or apriL 15, 1994
+ - Named groups are used when building the long regex so it is easier to reconstruct the date afterward with the correct format, especially if the
+   initial date had more than one space between its different parts, e.g. ``January 19,     2019``
 
 Method #6: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -336,18 +369,23 @@ Method #6: ``Day Month Year``, e.g. 19 January 1500
 
     # Date pattern #5: Day Month Year, e.g. 19 January   2019
     # e.g. Anatoly Aleksandrovich Vlasov20 August  1908Balashov, Russian Empire
-    regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>[j|J]anuary|[f|F]ebruary|" \
-            r"[m|M]arch|[a|A]pril|[m|M]ay|june|[j|J]uly|[a|A]ugust|[s|S]eptember|" \
-            r"[o|O]ctober|[n|N]ovember|[d|D]ecember)(?P<space2>\s*)(?P<year>\d+)"
+    regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>january|february|march|april|may|june|" \
+            r"july|august|september|october|november|december)(?P<space2>\s*)(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        fifth_date = match.group()
-        # Keep only one space between parts of date
-        subst = "\\g<day> \\g<month> \\g<year>"
-        fifth_date = re.sub(regex, subst, fifth_date, 0, re.MULTILINE)
+        day = match.groupdict()['day']
+        month = match.groupdict()['month'].capitalize()
+        year = match.groupdict()['year']
+        fifth_date = f'{day} {month} {year}'
     else:
         fifth_date = None
     dates['fifth_date'] = fifth_date
+
+`:information_source:` 
+
+ - The sixth method searches the text from the given ``<td>`` tag for any pattern of text respecting the
+   format ``Day Month Year``.
+ - The same explanations for the `fifth method <#method-5-month-day-year-e-g-january-19-1500>`_ applies here so we won't repeat them.
 
 |
 
@@ -357,17 +395,23 @@ Part 4: Get the birth and death places
 
 |
 
+Since the code for the ``extract_place()`` function is simple, all three methods will be explained here instead of doing it separately like it was donne for the DOB/DOD extraction methods from `Part 3 <#part-3-get-the-dob-and-dod>`_. 
+
 .. code-block:: python
 
    def extract_place(td_tag, kind_place='birthplace'):
+       assert kind_place in ['birthplace', 'deathplace']
        text = td_tag.text
+       # Method 1
        if td_tag.select(f'.{kind_place}'):
            place = clean_data(td_tag.select(f'.{kind_place}')[0].text)
        else:
+           # Method 2
            if 'aged' in text:
                # e.g. February 8, 1957(1957-02-08) (aged 53)Washington, D.C., U.S.
                match = re.search(r"aged\s*\d+\)(.*)$", text, re.MULTILINE)
            else:
+               # Method 3
                # Get the birthplace/deathplace after the DOB/DOD year
                # e.g. Neumann János Lajos(1903-12-28)December 28, 1903Budapest, Kingdom of Hungary, Austria-Hungary
                match = re.search(r",\s*\d+(.*)$", text, re.MULTILINE)
@@ -377,3 +421,18 @@ Part 4: Get the birth and death places
                place = None
        return place
 
+`:information_source:`
+
+ 1. The ``kind_place`` parameter takes two values: 'birthplace' or 'deathplace'
+ 2. The **first method** used to retrieve the birthplace/deathplace is by searching for any tag (``<div>``) with the 
+    ``birthplace``|``deathplace`` class. The text for this ``<div>`` tag is the place we are looking for.
+    
+    The 'birthplace' or 'deathplace' is found in the following *HTML* structure::
+    
+     <div style="display:inline" class="birthplace">Moscow, Russia</div>
+ 3. The **second method** only applies to the extraction of the deathplace. It searches the text from the ``<td>`` tag 
+    (see `Part 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_) for any string that follows the word aged plus any number
+    of spaces and a closed parenthesis, e.g. aged 53)Washington, D.C., U.S. This string should be the deathplace we are searching for.
+ 4. The **third method** retrieves the birthplace/deathplace by searching the same text like in the secod method but looks for any
+    string that follows a comma followed by any number of spaces and the year, e.g. 28, 1903Budapest, Kingdom of Hungary, 
+    Austria-Hungary. This string should be the birthplace/deathplace we are looking for.
