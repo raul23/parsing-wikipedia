@@ -21,7 +21,7 @@ This is the environment on which the script was tested:
 This is an output of the script::
 
    ############################
-   Process page 16: Lev_Landau.html
+   Processing page 16: Lev_Landau.html
 
    DOB extraction from different methods
    1st method: 1908-01-22
@@ -44,7 +44,7 @@ This is an output of the script::
 
 
    ############################
-   Process page 17: Louis_de_Broglie.html
+   Processing page 17: Louis_de_Broglie.html
 
    DOB extraction from different methods
    1st method: 1892-08-15
@@ -67,7 +67,7 @@ This is an output of the script::
 
 
    ############################
-   Process page 18: Ludwig_Boltzmann.html
+   Processing page 18: Ludwig_Boltzmann.html
 
    DOB extraction from different methods
    1st method: 1844-02-20
@@ -90,7 +90,7 @@ This is an output of the script::
 
 
    ############################
-   Process page 19: Max_Born.html
+   Processing page 19: Max_Born.html
 
    DOB extraction from different methods
    1st method: 1882-12-11
@@ -113,7 +113,7 @@ This is an output of the script::
 
 
    ############################
-   Process page 20: Murray_Gell-Mann.html
+   Processing page 20: Murray_Gell-Mann.html
 
    DOB extraction from different methods
    1st method: 1929-09-15
@@ -136,7 +136,7 @@ This is an output of the script::
 
 
    ############################
-   Process page 21: Paul_Dirac.html
+   Processing page 21: Paul_Dirac.html
 
    DOB extraction from different methods
    1st method: 1902-08-08
