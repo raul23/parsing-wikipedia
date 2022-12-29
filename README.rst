@@ -18,6 +18,144 @@ This is the environment on which the script was tested:
 * **Python**: version **3.7**
 * `beautifulsoup4 <https://www.crummy.com/software/BeautifulSoup/>`_: **v4.11.1**, for screen-scraping
 
+This is an output of the script::
+
+   ############################
+   Process page 16: Lev_Landau.html
+
+   DOB extraction from different methods
+   1st method: 1908-01-22
+   2nd method: None
+   3rd method: 1908-01-22
+   4th method: 1908-01-22
+   5th method: None
+   6th method: 22 january 1908
+   Birthplace: Baku, Baku Governorate, Russian Empire
+
+   DOD extraction from different methods
+   2nd method: None
+   3rd method: 1968-04-01
+   4th method: 1968-04-01
+   5th method: None
+   6th method: 1 april 1968
+   Deathplace: Moscow, Russian SFSR, Soviet Union
+   ############################
+
+
+
+   ############################
+   Process page 17: Louis_de_Broglie.html
+
+   DOB extraction from different methods
+   1st method: 1892-08-15
+   2nd method: None
+   3rd method: 1892-08-15
+   4th method: 1892-08-15
+   5th method: None
+   6th method: 15 august 1892
+   Birthplace: Dieppe, France
+
+   DOD extraction from different methods
+   2nd method: None
+   3rd method: 1987-03-19
+   4th method: 1987-03-19
+   5th method: None
+   6th method: 19 march 1987
+   Deathplace: Louveciennes, France
+   ############################
+
+
+
+   ############################
+   Process page 18: Ludwig_Boltzmann.html
+
+   DOB extraction from different methods
+   1st method: 1844-02-20
+   2nd method: None
+   3rd method: 1844-02-20
+   4th method: 1844-02-20
+   5th method: None
+   6th method: 20 february 1844
+   Birthplace: Vienna, Austrian Empire
+
+   DOD extraction from different methods
+   2nd method: None
+   3rd method: 1906-09-05
+   4th method: 1906-09-05
+   5th method: None
+   6th method: 5 september 1906
+   Deathplace: Tybein, Triest, Austria-Hungary
+   ############################
+
+
+
+   ############################
+   Process page 19: Max_Born.html
+
+   DOB extraction from different methods
+   1st method: 1882-12-11
+   2nd method: None
+   3rd method: 1882-12-11
+   4th method: 1882-12-11
+   5th method: None
+   6th method: 11 december 1882
+   Birthplace: Breslau, German Empire
+
+   DOD extraction from different methods
+   2nd method: None
+   3rd method: 1970-01-05
+   4th method: 1970-01-05
+   5th method: None
+   6th method: 5 january 1970
+   Deathplace: Göttingen, West Germany
+   ############################
+
+
+
+   ############################
+   Process page 20: Murray_Gell-Mann.html
+
+   DOB extraction from different methods
+   1st method: 1929-09-15
+   2nd method: None
+   3rd method: 1929-09-15
+   4th method: 1929-09-15
+   5th method: September 15, 1929
+   6th method: None
+   Birthplace: Manhattan, New York City, U.S.
+
+   DOD extraction from different methods
+   2nd method: None
+   3rd method: 2019-05-24
+   4th method: 2019-05-24
+   5th method: May 24, 2019
+   6th method: None
+   Deathplace: Santa Fe, New Mexico, U.S.
+   ############################
+
+
+
+   ############################
+   Process page 21: Paul_Dirac.html
+
+   DOB extraction from different methods
+   1st method: 1902-08-08
+   2nd method: None
+   3rd method: 1902-08-08
+   4th method: 1902-08-08
+   5th method: None
+   6th method: 8 august 1902
+   Birthplace: Bristol, England
+
+   DOD extraction from different methods
+   2nd method: None
+   3rd method: 1984-10-20
+   4th method: 1984-10-20
+   5th method: None
+   6th method: 20 october 1984
+   Deathplace: Tallahassee, Florida, U.S.
+   ############################
+
 `:star:` In the following, I will be explaining the most important parts of the script.
 
 |
