@@ -74,25 +74,24 @@ def extract_dates(td_tag):
             r"november|december)\s*((?P<day>\d+)),\s*(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        fourth_date = match.group().capitalize()
-        # Keep only one space between parts of date
-        subst = "\\g<month> \\g<day>, \\g<year>"
-        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
+        day = match.groupdict()['day']
+        month = match.groupdict()['month'].capitalize()
+        year = match.groupdict()['year']
+        fourth_date = f'{month} {day}, {year}'
     else:
         fourth_date = None
     dates['fourth_date'] = fourth_date
 
     # Date pattern #5: Day Month Year, e.g. 19 January   2019
     # e.g. Anatoly Aleksandrovich Vlasov20 August  1908Balashov, Russian Empire
-    regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>[j|J]anuary|[f|F]ebruary|" \
-            r"[m|M]arch|[a|A]pril|[m|M]ay|june|[j|J]uly|[a|A]ugust|[s|S]eptember|" \
-            r"[o|O]ctober|[n|N]ovember|[d|D]ecember)(?P<space2>\s*)(?P<year>\d+)"
+    regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>january|february|march|april|may|june|" \
+            r"july|august|september|october|november|december)(?P<space2>\s*)(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        fifth_date = match.group()
-        # Keep only one space between parts of date
-        subst = "\\g<day> \\g<month> \\g<year>"
-        fifth_date = re.sub(regex, subst, fifth_date, 0, re.MULTILINE)
+        day = match.groupdict()['day']
+        month = match.groupdict()['month'].capitalize()
+        year = match.groupdict()['year']
+        fifth_date = f'{day} {month} {year}'
     else:
         fifth_date = None
     dates['fifth_date'] = fifth_date
