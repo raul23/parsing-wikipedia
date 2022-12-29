@@ -216,7 +216,7 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
 
 `:information_source:` Explanation of the above Python code used for retrieving infobox labels
 
-1. An infobox label associated with a row in an infobox table is found within the ``<th>`` tag with the ``.infobox-label`` class
+1. An infobox label associated with a row in an infobox table is found within the ``<th>`` tag with the ``.infobox-label`` class.
    
    Thus the infobox label 'Born' is found in the following *HTML* structure::
    
