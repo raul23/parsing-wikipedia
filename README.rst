@@ -239,7 +239,7 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
 
 Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
-`:information_source:` Methods 2-6 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L37>`_.
+`:information_source:` Methods 2-6 are implemented within the function `extract_dates() <./scripts/extract_born_and_died_from_infobox.py#L37>`_.
 
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
@@ -402,7 +402,7 @@ Method #6: ``Day Month Year``, e.g. 19 January 1500
 
 Part 4: Get the birth and death places
 """"""""""""""""""""""""""""""""""""""
-`:information_source:` The extraction of the birth and death places are done within the function `extract_place(td_tag, kind_place='birthplace') <./scripts/extract_born_and_died_from_infobox.py#L17>`_
+`:information_source:` The extraction of the birth and death places are done within the function `extract_place() <./scripts/extract_born_and_died_from_infobox.py#L17>`_
 
 |
 
