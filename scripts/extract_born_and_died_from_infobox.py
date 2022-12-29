@@ -5,7 +5,8 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-import ipdb
+# import ipdb
+input_directory = Path(os.path.expanduser('~/Data/wikipedia/physicists'))
 
 
 def clean_data(data):
@@ -105,7 +106,6 @@ def extract_dates(td_tag):
 
 
 number_infobox = 0
-input_directory = Path(os.path.expanduser('~/Data/wikipedia/physicists'))
 for i, filepath in enumerate(input_directory.rglob('*.html'), start=1):
     print('############################')
     print(f'Processing page {i}: {filepath.name}\n')
