@@ -5,7 +5,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-# import ipdb
+import ipdb
 
 
 def clean_data(data):
@@ -13,10 +13,10 @@ def clean_data(data):
 
 
 def extract_place(td_tag, kind_place='birthplace'):
-    text = td_tag.text
     if td_tag.select(f'.{kind_place}'):
         place = clean_data(td_tag.select(f'.{kind_place}')[0].text)
     else:
+        text = clean_data(td_tag.text)
         if 'aged' in text:
             # e.g. February 8, 1957(1957-02-08) (aged 53)Washington, D.C., U.S.
             match = re.search(r"aged\s*\d+\)(.*)$", text, re.MULTILINE)
@@ -32,19 +32,28 @@ def extract_place(td_tag, kind_place='birthplace'):
 
 
 def extract_dates(td_tag):
-    text = td_tag.text
+    text = clean_data(td_tag.text)
     dates = {'first_date': None, 'second_date': None, 'third_date': None, 'fourth_date': None}
     # Check for different patterns of dates
-    # Date pattern #1: YYYY-MM-DD with regex
-    match = re.search(r"\d+-\d{1,2}-\d{1,2}", text, re.MULTILINE)
+    # Date pattern #1: YYYY usually at the beginning of the text
+    # e.g. 1944 (age 77–78)
+    match = re.search(r"^(\d{3,4})", text, re.MULTILINE)
     if match:
         first_date = match.group()
     else:
         first_date = None
     dates['first_date'] = first_date
 
-    # Date pattern #2: YYYY-MM-DD without regex
-    second_date = None
+    # Date pattern #2: YYYY-MM-DD with regex
+    match = re.search(r"\d+-\d{1,2}-\d{1,2}", text, re.MULTILINE)
+    if match:
+        second_date = match.group()
+    else:
+        second_date = None
+    dates['second_date'] = second_date
+
+    # Date pattern #3: YYYY-MM-DD without regex
+    third_date = None
     span_tags = td_tag.select('span')
     for span_tag in span_tags:
         if span_tag.get('style') == 'display:none':
@@ -55,42 +64,43 @@ def extract_dates(td_tag):
             # Check it is in the correct format
             match = re.search(r"\d+-\d{1,2}-\d{1,2}", date, re.MULTILINE)
             if match:
-                second_date = date
+                third_date = date
                 break
-    dates['second_date'] = second_date
+    dates['third_date'] = third_date
 
-    # Date pattern #3: Month Day, Year, e.g. January 19, 2019
+    # Date pattern #4: Month Day, Year, e.g. January 19, 2019
     regex = r"(?P<month>january|february|march|april|may|june|july|august|september|october|" \
             r"november|december)\s*((?P<day>\d+)),\s*(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        third_date = match.group().capitalize()
+        fourth_date = match.group().capitalize()
         # Keep only one space between parts of date
         subst = "\\g<month> \\g<day>, \\g<year>"
-        third_date = re.sub(regex, subst, third_date, 0, re.MULTILINE)
+        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
     else:
-        third_date = None
-    dates['third_date'] = third_date
+        fourth_date = None
+    dates['fourth_date'] = fourth_date
 
-    # Date pattern #4: Day Month Year, e.g. 19 January   2019
+    # Date pattern #5: Day Month Year, e.g. 19 January   2019
     # e.g. Anatoly Aleksandrovich Vlasov20 August  1908Balashov, Russian Empire
     regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>[j|J]anuary|[f|F]ebruary|" \
             r"[m|M]arch|[a|A]pril|[m|M]ay|june|[j|J]uly|[a|A]ugust|[s|S]eptember|" \
             r"[o|O]ctober|[n|N]ovember|[d|D]ecember)(?P<space2>\s*)(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        fourth_date = match.group()
+        fifth_date = match.group()
         # Keep only one space between parts of date
         subst = "\\g<day> \\g<month> \\g<year>"
-        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
+        fifth_date = re.sub(regex, subst, fifth_date, 0, re.MULTILINE)
     else:
-        fourth_date = None
-    dates['fourth_date'] = fourth_date
+        fifth_date = None
+    dates['fifth_date'] = fifth_date
 
-    print(f'First date: {first_date}')
-    print(f'Second date: {second_date}')
-    print(f'Third date: {third_date}')
-    print(f'Fourth date: {fourth_date}')
+    print(f'2nd method: {first_date}')
+    print(f'3rd method: {second_date}')
+    print(f'4th method: {third_date}')
+    print(f'5th method: {fourth_date}')
+    print(f'6th method: {fifth_date}')
     return dates
 
 
@@ -98,7 +108,9 @@ number_infobox = 0
 input_directory = Path(os.path.expanduser('~/Data/wikipedia/physicists'))
 for i, filepath in enumerate(input_directory.rglob('*.html'), start=1):
     print('############################')
-    print(f'Process page {i}: {filepath}')
+    print(f'Processing page {i}: {filepath.name}\n')
+    if False and '' not in filepath.name:  # Debug code
+        continue
     with open(filepath, 'r') as f:
         text = f.read()
     bs = BeautifulSoup(text, 'html.parser')
@@ -118,22 +130,23 @@ for i, filepath in enumerate(input_directory.rglob('*.html'), start=1):
             infobox_label = unicodedata.normalize('NFKD', infobox_label)
             # From the <tr> tag, get the infobox-data containing the relevant Born or Died information
             td_tag = th_tag.parent.select('.infobox-data')[0]
-            td_tag_text = clean_data(td_tag.text)
             if infobox_label == 'Born':
                 if td_tag.select('.bday'):
                     dob = td_tag.select('.bday')[0].string
                 else:
                     dob = None
-                    extract_dates(td_tag)
+                print('DOB extraction from different methods')
+                print(f'1st method: {dob}')
+                extract_dates(td_tag)
                 birthplace = extract_place(td_tag)
-                print(f'DOB: {dob}')
                 print(f'Birthplace: {birthplace}\n')
             elif infobox_label == 'Died':
+                print('DOD extraction from different methods')
                 extract_dates(td_tag)
                 deathplace = extract_place(td_tag, 'deathplace')
                 print(f'Deathplace: {deathplace}')
     print('############################\n\n\n')
-
+    # ipdb.set_trace()
 # ipdb.set_trace()
 
 # 497 infoboxes over 641 wikipedia pages (78%) when using infobox.biography.vcard
