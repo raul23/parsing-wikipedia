@@ -185,7 +185,7 @@ Part 1: Checking if a Wikipedia page has an infobox
 
    bs = BeautifulSoup(text, 'html.parser')
    b_tag = bs.select('p > b')
-   tab_tag = bs.select('.infobox.biography.vcard')
+   tab_tag = bs.select('.infobox.vcard')
 
 `:information_source:` The infobox table for a given Wikipedia page is found within a ``<table>`` tag with the following classes: ``infobox vcard``. This table contains biographical information about a famous person.
 
