@@ -246,7 +246,7 @@ Part 3: Get the DOB and DOD
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
 The simplest method for retrieving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class, like in this 
-`HTML code <https://en.wikipedia.org/wiki/Abdus_Salam>`_::
+*HTML* code::
 
  <td class="infobox-data"><span style="display:none">(<span class="bday">1926-01-29</span>)</span>
 
