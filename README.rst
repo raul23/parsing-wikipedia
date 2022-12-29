@@ -181,8 +181,7 @@ Part 1: Checking if a Wikipedia page has an infobox
    b_tag = bs.select('p > b')
    tab_tag = bs.select('.infobox.biography.vcard')
 
-`:information_source:` The infobox table for a given Wikipedia page is found within a ``<table>`` tag w
-ith the following classes: ``infobox vcard``. This table contains biographical information about a famous person.
+`:information_source:` The infobox table for a given Wikipedia page is found within a ``<table>`` tag with the following classes: ``infobox vcard``. This table contains biographical information about a famous person.
 
 For example: `wikipedia.org/wiki/Edward_Teller <https://en.wikipedia.org/wiki/Edward_Teller>`_
 
