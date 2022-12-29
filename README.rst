@@ -82,7 +82,7 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
 
 Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
-`:information_source:` Methods 2-5 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L34>`
+`:information_source:` Methods 2-5 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L34>`_
 
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
