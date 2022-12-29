@@ -225,7 +225,7 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
  
 2. ``th_tags`` is a list containing all the labels of an infobox table which we iterate until we find an infobox label (i.e. it is not ``None``).
 3. Cleanup the infobox label a little bit by removing non-breaking spaces (``\xa0``) with Python built-in module 
-   `unicodedata.normalize or even ``replace('\xa0', ' ')`` could do the job. On `stackoverflow 
+   `unicodedata.normalize or even ``replace()`` could do the job. On `stackoverflow 
    <https://stackoverflow.com/a/48286252>`_, they highly recommend to use `unicodedata.normalize 
    <https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize>`_ but I also had success with ``replace()``.
 4. Get the infobox data associated with the given label by retrieving it from ``<th>``'s parent which is a ``<tr>`` tag. From this ``<tr>`` tag, 
