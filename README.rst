@@ -25,6 +25,11 @@ This is the environment on which the script was tested:
 * **Python**: version **3.7**
 * `beautifulsoup4 <https://www.crummy.com/software/BeautifulSoup/>`_: **v4.11.1**, for screen-scraping
 
+`:warning:` In order to run the script, you need first to have a folder with all the Wikipedia pages (*.html) you want to parse. Then, you need
+to give the path to this folder to the script, like this::
+
+ $ python extract_from_infobox.py ~/Data/wikipedia/physicists
+
 Sample output of the script::
 
    ############################
