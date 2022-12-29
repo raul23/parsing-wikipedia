@@ -162,7 +162,7 @@ Sample output of the script::
 
 `:information_source:`
 
- - The methods used for extracting the DOB and DOD are explained in `Part <#part-3-get-the-dob-and-dod>`_
+ - The methods used for extracting the DOB and DOD are explained in `Part 3 <#part-3-get-the-dob-and-dod>`_
  - All methods 2-6 are used for extracting both the DOB and DOD. However, `method 1 <#method-1-bday-simplest>`_ is only used
    for extracting the DOB.
 
