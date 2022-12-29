@@ -82,6 +82,8 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
 
 Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
+`:information_source:` Methods 2-5 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L34>`
+
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
 The simplest method for retrieving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class, like this 
@@ -106,12 +108,74 @@ explained in the following sections.
 
 Method #2: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
+.. code-block:: python
+
+    def extract_dates(td_tag):     
+        text = td_tag.text
+        dates = {'first_date': None, 'second_date': None, 'third_date': None, 'fourth_date': None}
+        # Date pattern #1: YYYY-MM-DD with regex
+        match = re.search(r"\d+-\d{1,2}-\d{1,2}", text, re.MULTILINE)
+        if match:
+            first_date = match.group()
+        else:
+            first_date = None
+        dates['first_date'] = first_date
+
 Method #3: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+.. code-block:: python
+
+    # Date pattern #2: YYYY-MM-DD without regex
+    second_date = None
+    span_tags = td_tag.select('span')
+    for span_tag in span_tags:
+        if span_tag.get('style') == 'display:none':
+            date = clean_data(span_tag.text)
+            # Remove parentheses from date
+            # e.g. '(2001-01-15)' --> '2001-01-15'
+            date = date.replace('(', '').replace(')', '')
+            # Check it is in the correct format
+            match = re.search(r"\d+-\d{1,2}-\d{1,2}", date, re.MULTILINE)
+            if match:
+                second_date = date
+                break
+    dates['second_date'] = second_date
+
 Method #4: ``Month Day, Year``, e.g. January 19, 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
+.. code-block:: python
+
+   # Date pattern #3: Month Day, Year, e.g. January 19, 2019
+    regex = r"(?P<month>january|february|march|april|may|june|july|august|september|october|" \
+            r"november|december)\s*((?P<day>\d+)),\s*(?P<year>\d+)"
+    match = re.search(regex, text.lower(), re.MULTILINE)
+    if match:
+        third_date = match.group().capitalize()
+        # Keep only one space between parts of date
+        subst = "\\g<month> \\g<day>, \\g<year>"
+        third_date = re.sub(regex, subst, third_date, 0, re.MULTILINE)
+    else:
+        third_date = None
+    dates['third_date'] = third_date
+
 Method #5: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
+.. code-block:: python
+
+    # Date pattern #4: Day Month Year, e.g. 19 January   2019
+    # e.g. Anatoly Aleksandrovich Vlasov20 August  1908Balashov, Russian Empire
+    regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>[j|J]anuary|[f|F]ebruary|" \
+            r"[m|M]arch|[a|A]pril|[m|M]ay|june|[j|J]uly|[a|A]ugust|[s|S]eptember|" \
+            r"[o|O]ctober|[n|N]ovember|[d|D]ecember)(?P<space2>\s*)(?P<year>\d+)"
+    match = re.search(regex, text.lower(), re.MULTILINE)
+    if match:
+        fourth_date = match.group()
+        # Keep only one space between parts of date
+        subst = "\\g<day> \\g<month> \\g<year>"
+        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
+    else:
+        fourth_date = None
+    dates['fourth_date'] = fourth_date
 
 Part 4: Get the birth place
 """""""""""""""""""""""""""
