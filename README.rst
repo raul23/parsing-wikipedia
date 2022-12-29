@@ -91,8 +91,7 @@ The simplest method for retrieving the DOB in an infobox is to look for it in a 
 
 |
 
-Python code that search starting from ``<td>`` (explained in `section 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_) any
-tag (``<span>``) with the ``bday`` class:
+Python code that search any tag (``<span>``) with the ``bday`` class starting from ``<td>`` (explained in `section 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_):
 
 .. code-block:: python
 
