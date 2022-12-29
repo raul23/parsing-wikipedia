@@ -136,7 +136,7 @@ if __name__ == '__main__':
                 td_tag = th_tag.parent.select('.infobox-data')[0]
                 if infobox_label == 'Born':
                     if td_tag.select('.bday'):
-                        dob = td_tag.select('.bday')[0].string
+                        dob = clean_data(td_tag.select('.bday')[0].string)
                     else:
                         dob = None
                     print('DOB extraction from different methods')
