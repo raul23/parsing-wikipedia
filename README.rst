@@ -402,7 +402,7 @@ Method #6: ``Day Month Year``, e.g. 19 January 1500
 
 Part 4: Get the birth and death places
 """"""""""""""""""""""""""""""""""""""
-`:information_source:` The extraction of the birth and death places are done within the function `extract_place() <./scripts/extract_born_and_died_from_infobox.py#L17>`_
+`:information_source:` The extraction of the birth and death places is done within the function `extract_place() <./scripts/extract_born_and_died_from_infobox.py#L17>`_
 
 |
 
