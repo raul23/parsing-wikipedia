@@ -286,6 +286,8 @@ Method #2: ``YYYY`` at the beginning, e.g. 1900
 
 `:information_source:` 
 
+ - The text to be search on is first cleaned up (i.e. removing any citation number/text within square brackets 
+   and non-breaking spaces, see the `clean_data(data) <./scripts/extract_born_and_died_from_infobox.py#L13>`_ function).
  - The second method searches the text from the given ``<td>`` tag for any pattern of number with 3 or 4 digits at the 
    beginning of the text, e.g. 1944 (age 77–78).
  - The reason for specifying the number of digits in the regex is that if we don't then we might also catch numbers that 
@@ -338,8 +340,8 @@ Method #4: ``YYYY-MM-DD`` with ``<span>``, e.g. 1500-01-19
 
  1. The fourth method selects all the ``<span>`` tags starting from the given ``<td>`` tag. The first of these ``<span>`` tag that
     has the ``style='display:none'`` attribute gets analyzed further.
- 2. The text found within this ``<span>`` tag gets cleaned up (removing any citation number/text within square brackets and so on, see
-    the `clean_data(data) <#scripts/extract_born_and_died_from_infobox.py#L11>`_ function) and its parentheses are removed. 
+ 2. The text found within this ``<span>`` tag gets `cleaned up <./scripts/extract_born_and_died_from_infobox.py#L13>`_ 
+    and its parentheses are removed. 
     
     Example: '(2001-01-15)' --> '2001-01-15'
  3. Finally, just to make sure that the found date is in the correct format (YYYY-MM-DD), it is analyzed with a regex and if it is found
