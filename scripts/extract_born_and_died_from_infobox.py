@@ -154,4 +154,4 @@ if __name__ == '__main__':
     # ipdb.set_trace()
 
     # 497 infoboxes over 641 wikipedia pages (78%) when using infobox.biography.vcard
-    # 506 infoboxes over 641 wikipedia pages (79%) when using infobox..vcard
+    # 506 infoboxes over 641 wikipedia pages (79%) when using infobox.vcard
