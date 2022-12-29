@@ -7,12 +7,11 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-# import ipdb
+import ipdb
 
 
 def clean_data(data):
-    # return unicodedata.normalize('NFC', re.sub(r"\[.+\]", '', data, 0, re.MULTILINE).replace('\xa0', ' '))
-    return re.sub(r"\[.+\]", '', data, 0, re.MULTILINE).replace('\xa0', ' ')
+    return unicodedata.normalize('NFC', re.sub(r"\[.+\]", '', data, 0, re.MULTILINE))
 
 
 def extract_place(td_tag, kind_place='birthplace'):
@@ -131,8 +130,8 @@ if __name__ == '__main__':
                 # Clean infobox label by replacing \xa0 with ' '
                 # \xa0 is actually non-breaking space in Latin1 (ISO 8859-1), also chr(160)
                 # Ref.: https://stackoverflow.com/a/11566398
-                # infobox_label = unicodedata.normalize('NFKD', infobox_label)
-                infobox_label = infobox_label.replace('\xa0', ' ')
+                # infobox_label = infobox_label.replace('\xa0', ' ')
+                infobox_label = unicodedata.normalize('NFC', infobox_label)
                 # From the <tr> tag, get the infobox-data containing the relevant Born or Died information
                 td_tag = th_tag.parent.select('.infobox-data')[0]
                 if infobox_label == 'Born':
