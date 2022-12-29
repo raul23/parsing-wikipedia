@@ -221,9 +221,10 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
    `unicodedata.normalize <https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize>`_
    (For more information, check `stackoverflow.com/a/48286252 <https://stackoverflow.com/a/48286252>`_)
 4. Get the infobox data associated with the given label by retrieving it from ``<th>``'s parent which is a ``<tr>`` tag. From this ``<tr>`` tag, 
-   you can get the infobox data within a ``<td>`` tag
+   you can get the infobox data within a ``<td>`` tag. The infobox data contains the useful information we are looking to extract
+   for a given label, e.g. the DOB and birthplace.
    
-   Thus the infobox data is found in the following *HTML* structure::
+   Thus the infobox data for a 'Born' label is found in the following *HTML* structure::
    
     <tbody> <tr> <td class='infobox-data'>"January 15, 1908"</td>
 5. If the infobox label is the correct one ('Born' or 'Died'), then it will be processed accordingly to remove the dates
