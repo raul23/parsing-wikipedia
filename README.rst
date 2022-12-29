@@ -377,7 +377,7 @@ Method #5: ``Month Day, Year``, e.g. January 19, 1500
  - The fifth method searches the text from the given ``<td>`` tag for any pattern of text respecting the
    format ``Month Day, Year``.
  - The text searched by the regex is first put all in lowercase so we can take into account cases where the dates 
-   were entered with any of letters of the month capitalized, e.g. JAnuary 19, 2019 or apriL 15, 1994.
+   were entered with any of the letters of the month capitalized, e.g. JAnuary 19, 2019 or apriL 15, 1994.
  - Named groups are used when building the long regex so it is easier to reconstruct the date afterward with the correct format, especially if the
    initial date had more than one space between its different parts, e.g. ``January 19,     2019``.
 
