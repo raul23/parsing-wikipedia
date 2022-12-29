@@ -85,7 +85,9 @@ Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
-The simplest method for retreiving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class.
+The simplest method for retreiving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class, like this::
+
+ <td class="infobox-data"><span style="display:none">(<span class="bday">1926-01-29</span>)</span>
 
 .. code-block:: python
 
