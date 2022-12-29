@@ -31,9 +31,11 @@ Part 1: Checking if a Wikipedia page has an infobox
    tab_tag = bs.select('.infobox.biography.vcard')
 
 `:information_source:` The infobox table for a given Wikipedia page is found within a ``<table>`` tag w
-ith the classes: ``infobox biography vcard``. This table contains biographical information about a famous person.
+ith the following classes: ``infobox vcard``. This table contains biographical information about a famous person.
 
 For example: `wikipedia.org/wiki/Edward_Teller <https://en.wikipedia.org/wiki/Edward_Teller>`_
+
+`:warning:` the grand majority of Wikipedia pages analyzed (79%, 497 pages over 641) uses ``<table>`` with three classes: ``infobox biography vcard``. However, there is still a small minority (1%, 9 pages) who relies on two of the classes:  ``infobox vcard``. Thus, it is better to search for ``<table class="infobox vcard">``.
 
 |
 
@@ -59,7 +61,7 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
 
 `:information_source:` Explanation of the above Python code used for retrieving infobox labels
 
-1. An infobox label associated with a row in an infobox table is found within the ``<th>`` tag with the class: ``.infobox-label`` 
+1. An infobox label associated with a row in an infobox table is found within the ``<th>`` tag with the ``.infobox-label`` class
    
    Thus the infobox label is found in the following *HTML* structure::
    
@@ -79,22 +81,25 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
 
 |
 
-Part 3: Get the DOB
-"""""""""""""""""""
+Part 3: Get the DOB and DOD
+"""""""""""""""""""""""""""
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
-Method #2: ``YYYY-MM-DD``, e.g. 1500-01-19
-''''''''''''''''''''''''''''''''''''''''''
-Method #3: ``Month Day, Year``, e.g. January 19, 1500
+The simplest method for retreiving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class.
+
+.. code-block:: python
+
+Method #2: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
-Method #4: ``Day Month Year``, e.g. 19 January 1500
+Method #3: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Method #4: ``Month Day, Year``, e.g. January 19, 1500
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Method #5: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Part 4: Get the birth place
 """""""""""""""""""""""""""
 
-Part 5: Get the DOD
-"""""""""""""""""""
-
-Part 6: Get the death place
+Part 5: Get the death place
 """""""""""""""""""""""""""
