@@ -220,7 +220,7 @@ Once an infobox was found within a Wikipedia page, we can search for the desired
 
 Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
-`:information_source:` Methods 2-5 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L34>`_
+`:information_source:` Methods 2-6 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L34>`_
 
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
@@ -244,27 +244,43 @@ Python code that searches any tag (``<span>``) with the ``bday`` class starting 
 `:information_source:` If no DOB could be found with this simple method, then other more complex methods involving regex will be deployed as it is
 explained in the following sections.
 
-Method #2: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
+|
+
+Method #2: ``YYYY`` at the beginning, e.g. 1900
+'''''''''''''''''''''''''''''''''''''''''''''''
+.. code-block:: python
+
+   def extract_dates(td_tag):
+       text = clean_data(td_tag.text)
+       dates = {'first_date': None, 'second_date': None, 'third_date': None, 'fourth_date': None}
+       # Check for different patterns of dates
+       # Date pattern #1: YYYY usually at the beginning of the text
+       # e.g. 1944 (age 77–78)
+       match = re.search(r"^(\d{3,4})", text, re.MULTILINE)
+       if match:
+           first_date = match.group()
+       else:
+           first_date = None
+       dates['first_date'] = first_date
+
+Method #3: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
-    def extract_dates(td_tag):     
-        text = td_tag.text
-        dates = {'first_date': None, 'second_date': None, 'third_date': None, 'fourth_date': None}
-        # Date pattern #1: YYYY-MM-DD with regex
-        match = re.search(r"\d+-\d{1,2}-\d{1,2}", text, re.MULTILINE)
-        if match:
-            first_date = match.group()
-        else:
-            first_date = None
-        dates['first_date'] = first_date
+    # Date pattern #2: YYYY-MM-DD with regex
+    match = re.search(r"\d+-\d{1,2}-\d{1,2}", text, re.MULTILINE)
+    if match:
+        second_date = match.group()
+    else:
+        second_date = None
+    dates['second_date'] = second_date
 
-Method #3: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
+Method #4: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
-    # Date pattern #2: YYYY-MM-DD without regex
-    second_date = None
+    # Date pattern #3: YYYY-MM-DD without regex
+    third_date = None
     span_tags = td_tag.select('span')
     for span_tag in span_tags:
         if span_tag.get('style') == 'display:none':
@@ -275,45 +291,45 @@ Method #3: ``YYYY-MM-DD`` without regex, e.g. 1500-01-19
             # Check it is in the correct format
             match = re.search(r"\d+-\d{1,2}-\d{1,2}", date, re.MULTILINE)
             if match:
-                second_date = date
+                third_date = date
                 break
-    dates['second_date'] = second_date
+    dates['third_date'] = third_date
 
-Method #4: ``Month Day, Year``, e.g. January 19, 1500
+Method #5: ``Month Day, Year``, e.g. January 19, 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
-    # Date pattern #3: Month Day, Year, e.g. January 19, 2019
+    # Date pattern #4: Month Day, Year, e.g. January 19, 2019
     regex = r"(?P<month>january|february|march|april|may|june|july|august|september|october|" \
             r"november|december)\s*((?P<day>\d+)),\s*(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        third_date = match.group().capitalize()
+        fourth_date = match.group().capitalize()
         # Keep only one space between parts of date
         subst = "\\g<month> \\g<day>, \\g<year>"
-        third_date = re.sub(regex, subst, third_date, 0, re.MULTILINE)
+        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
     else:
-        third_date = None
-    dates['third_date'] = third_date
+        fourth_date = None
+    dates['fourth_date'] = fourth_date
 
-Method #5: ``Day Month Year``, e.g. 19 January 1500
+Method #6: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
-    # Date pattern #4: Day Month Year, e.g. 19 January   2019
+    # Date pattern #5: Day Month Year, e.g. 19 January   2019
     # e.g. Anatoly Aleksandrovich Vlasov20 August  1908Balashov, Russian Empire
     regex = r"(?P<day>\d{1,2})(?P<space1>\s*)(?P<month>[j|J]anuary|[f|F]ebruary|" \
             r"[m|M]arch|[a|A]pril|[m|M]ay|june|[j|J]uly|[a|A]ugust|[s|S]eptember|" \
             r"[o|O]ctober|[n|N]ovember|[d|D]ecember)(?P<space2>\s*)(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
     if match:
-        fourth_date = match.group()
+        fifth_date = match.group()
         # Keep only one space between parts of date
         subst = "\\g<day> \\g<month> \\g<year>"
-        fourth_date = re.sub(regex, subst, fourth_date, 0, re.MULTILINE)
+        fifth_date = re.sub(regex, subst, fifth_date, 0, re.MULTILINE)
     else:
-        fourth_date = None
-    dates['fourth_date'] = fourth_date
+        fifth_date = None
+    dates['fifth_date'] = fifth_date
 
 Part 4: Get the birth and death places
 """"""""""""""""""""""""""""""""""""""
