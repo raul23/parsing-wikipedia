@@ -9,7 +9,7 @@ Parsing Wikipedia pages
 Extract information from infobox
 ================================
 Many Wikipedia pages have an infobox table with important information about the subject of the page. Thus for a famous person, we
-can expect for this table to have the following information: DOB, DOD, Alma mater, Eduction, Known for, Awards, ...
+can expect for this table to have the following information: DOB, DOD, Alma mater, Education, Known for, Awards, ...
 
 Extract DOB, birthplace, DOD and deathplace
 -------------------------------------------
