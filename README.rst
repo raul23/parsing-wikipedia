@@ -17,7 +17,7 @@ Extract DOB, birthplace, DOD and deathplace
  
  - DOB: Day Of Birth
  - DOD: Day of Death
- - The script can be found at `extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_
+ - The script can be found at `extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_.
 
 This is the environment on which the script was tested:
 
@@ -165,9 +165,10 @@ Sample output of the script::
 
 `:information_source:`
 
- - The methods used for extracting the DOB and DOD are explained in `Part 3 <#part-3-get-the-dob-and-dod>`_
+ - The methods used for extracting the DOB and DOD are explained in `Part 3 <#part-3-get-the-dob-and-dod>`_.
  - All methods 2-6 are used for extracting both the DOB and DOD. However, `method 1 <#method-1-bday-simplest>`_ is only used
    for extracting the DOB.
+ - The same method is used for extracting the birthplace and deathplace, as explained in `Part 4 <#part-4-get-the-birth-and-death-places>`_.
 
 `:star:` In the following, I will be explaining the most important parts of the script.
 
@@ -216,10 +217,10 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
    
     <tbody> <tr> <th class='infobox-label'>Born</th>
  
-2. ``th_tags`` is a list containing all the labels of an infobox table which we iterate until we find an infobox label (i.e. it is not ``None``)
+2. ``th_tags`` is a list containing all the labels of an infobox table which we iterate until we find an infobox label (i.e. it is not ``None``).
 3. Cleanup the infobox label a little bit by removing non-breaking spaces (``\xa0``) with Python built-in module 
    `unicodedata.normalize <https://docs.python.org/3/library/unicodedata.html#unicodedata.normalize>`_
-   (For more information, check `stackoverflow.com/a/48286252 <https://stackoverflow.com/a/48286252>`_)
+   (For more information, check `stackoverflow.com/a/48286252 <https://stackoverflow.com/a/48286252>`_).
 4. Get the infobox data associated with the given label by retrieving it from ``<th>``'s parent which is a ``<tr>`` tag. From this ``<tr>`` tag, 
    you can get the infobox data within a ``<td>`` tag. The infobox data contains the useful information we are looking to extract
    for a given label, e.g. the DOB and birthplace.
@@ -227,13 +228,13 @@ Once an infobox is found within a Wikipedia page, we can search for the desired 
    Thus the infobox data for a 'Born' label is found in the following *HTML* structure::
    
     <tbody> <tr> <td class='infobox-data'>"January 15, 1908"</td>
-5. If the infobox label is the correct one ('Born' or 'Died'), then it will be processed accordingly to remove the dates
+5. If the infobox label is the correct one ('Born' or 'Died'), then it will be processed accordingly to remove the dates.
 
 |
 
 Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
-`:information_source:` Methods 2-6 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L35>`_
+`:information_source:` Methods 2-6 are implemented within the function `extract_dates(td_tag) <./scripts/extract_born_and_died_from_infobox.py#L35>`_.
 
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
@@ -279,9 +280,9 @@ Method #2: ``YYYY`` at the beginning, e.g. 1900
 `:information_source:` 
 
  - The second method searches the text from the given ``<td>`` tag for any pattern of number with 3 or 4 digits at the 
-   beginning of the text, e.g. 1944 (age 77–78)
+   beginning of the text, e.g. 1944 (age 77–78).
  - The reason for specifying the number of digits in the regex is that if we don't then we might also catch numbers that 
-   correspond to the day of the DOB/DOD, e.g. 20 October 1984
+   correspond to the day of the DOB/DOD, e.g. 20 October 1984.
 
 |
 
@@ -301,8 +302,8 @@ Method #3: ``YYYY-MM-DD`` with regex only, e.g. 1500-01-19
 
  - The third method searches the text from the given ``<td>`` tag for any pattern of numbers respecting the
    format ``YYYY-MM-DD`` with the year part starting at year 1 and for the other parts (month and day) having one or two digits.
- - Dates that should be matched: ``15-1-2`` and ``1987-08-12``
- - Dates that should not be matched: ``1947-123-2`` and ``-11-10``
+ - Dates that should be matched: ``15-1-2`` and ``1987-08-12``.
+ - Dates that should not be matched: ``1947-123-2`` and ``-11-10``.
 
 |
 
@@ -362,9 +363,9 @@ Method #5: ``Month Day, Year``, e.g. January 19, 1500
  - The fifth method searches the text from the given ``<td>`` tag for any pattern of text respecting the
    format ``Month Day, Year``.
  - The text searched by the regex is first put all in lowercase so we can take into account cases where the dates 
-   were entered with any of letters of the month capitalized, e.g. JAnuary 19, 2019 or apriL 15, 1994
+   were entered with any of letters of the month capitalized, e.g. JAnuary 19, 2019 or apriL 15, 1994.
  - Named groups are used when building the long regex so it is easier to reconstruct the date afterward with the correct format, especially if the
-   initial date had more than one space between its different parts, e.g. ``January 19,     2019``
+   initial date had more than one space between its different parts, e.g. ``January 19,     2019``.
 
 Method #6: ``Day Month Year``, e.g. 19 January 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -426,7 +427,7 @@ Since the code for the ``extract_place()`` function is simple, all three methods
 
 `:information_source:`
 
- 1. The ``kind_place`` parameter takes two values: 'birthplace' or 'deathplace'
+ 1. The ``kind_place`` parameter takes two values: 'birthplace' or 'deathplace'.
  2. The **first method** used to retrieve the birthplace/deathplace searches for any tag (``<div>``) with the 
     ``birthplace|deathplace`` class. The text for this ``<div>`` tag is the place we are looking for.
     
