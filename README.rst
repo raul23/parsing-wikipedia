@@ -10,7 +10,11 @@ Extract information from infobox
 ================================
 Extract DOB, birthplace, DOD and deathplace
 -------------------------------------------
-`:information_source:` The script can be found at `extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_
+`:information_source:` 
+ 
+ - DOB: Day Of Birth
+ - DOD: Day of Death
+ - The script can be found at `extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_
 
 This is the environment on which the script was tested:
 
@@ -18,7 +22,7 @@ This is the environment on which the script was tested:
 * **Python**: version **3.7**
 * `beautifulsoup4 <https://www.crummy.com/software/BeautifulSoup/>`_: **v4.11.1**, for screen-scraping
 
-This is an output of the script::
+Sample output of the script::
 
    ############################
    Processing page 16: Lev_Landau.html
@@ -156,6 +160,12 @@ This is an output of the script::
    Deathplace: Tallahassee, Florida, U.S.
    ############################
 
+`:information_source:`
+
+ - The methods used for extracting the DOB and DOD are explained in `Part <#part-3-get-the-dob-and-dod>`_
+ - All methods 2-6 are used for extracting both the DOB and DOD. However, `method 1 <#method-1-bday-simplest>`_ is only used
+   for extracting the DOB.
+
 `:star:` In the following, I will be explaining the most important parts of the script.
 
 |
@@ -231,7 +241,7 @@ The simplest method for retrieving the DOB in an infobox is to look for it in a 
 
 |
 
-Python code that searches any tag (``<span>``) with the ``bday`` class starting from ``<td>`` (explained in `section 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_):
+Python code that searches any tag (``<span>``) with the ``bday`` class starting from ``<td>`` (explained in `Part 2 <#part-2-search-for-the-infobox-labels-born-and-died>`_):
 
 .. code-block:: python
 
