@@ -145,7 +145,7 @@ Method #4: ``Month Day, Year``, e.g. January 19, 1500
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 .. code-block:: python
 
-   # Date pattern #3: Month Day, Year, e.g. January 19, 2019
+    # Date pattern #3: Month Day, Year, e.g. January 19, 2019
     regex = r"(?P<month>january|february|march|april|may|june|july|august|september|october|" \
             r"november|december)\s*((?P<day>\d+)),\s*(?P<year>\d+)"
     match = re.search(regex, text.lower(), re.MULTILINE)
