@@ -85,11 +85,21 @@ Part 3: Get the DOB and DOD
 """""""""""""""""""""""""""
 Method #1: ``.bday`` (simplest)
 '''''''''''''''''''''''''''''''
-The simplest method for retreiving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class, like this::
+The simplest method for retrieving the DOB in an infobox is to look for it in a ``<span>`` tag with the ``bday`` class, like this 
+`HTML code <https://en.wikipedia.org/wiki/Abdus_Salam>`_::
 
  <td class="infobox-data"><span style="display:none">(<span class="bday">1926-01-29</span>)</span>
 
 .. code-block:: python
+
+    if td_tag.select('.bday'):
+       dob = td_tag.select('.bday')[0].string
+   else:
+       # Use other methods to retrieve the DOB
+       dob = None
+
+`:information_source:` If no DOB could be found with this simple method, then other more complex methods involving regex will be deployed as it is
+explained in the following sections.
 
 Method #2: ``YYYY-MM-DD`` with regex, e.g. 1500-01-19
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
