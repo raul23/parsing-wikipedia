@@ -415,7 +415,7 @@ Part 4: Get the birth and death places
 
 |
 
-Since the code for the ``extract_place()`` function is simple, all three methods will be explained here instead of doing it separately like it was donne for the DOB/DOD extraction methods from `Part 3 <#part-3-get-the-dob-and-dod>`_. 
+Since the code for the ``extract_place()`` function is simple, all three methods will be explained here instead of doing it separately like it was done for the DOB/DOD extraction methods from `Part 3 <#part-3-get-the-dob-and-dod>`_. 
 
 .. code-block:: python
 
