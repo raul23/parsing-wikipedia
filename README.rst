@@ -326,7 +326,7 @@ Method #4: ``YYYY-MM-DD`` with ``<span>``, e.g. 1500-01-19
 `:information_source:` 
 
  1. The fourth method selects all the ``<span>`` tags starting from the given ``<td>`` tag. The first of these ``<span>`` tag that
-    has the `style='display:none'` attribute gets analyzed further.
+    has the ``style='display:none'`` attribute gets analyzed further.
  2. The text found within this ``<span>`` tag gets cleaned up (removing any citation number/text within square brackets and so one, see
     the `clean_data(data) <#scripts/extract_born_and_died_from_infobox.py#L11>`_ function) and its parentheses are removed. 
     
