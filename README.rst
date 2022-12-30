@@ -175,7 +175,8 @@ Sample output of the script::
    for extracting the DOB.
  - The same method is used for extracting the birthplace and deathplace, as explained in `Part 4 <#part-4-get-the-birth-and-death-places>`_.
 
-`:star:` In the following, I will be explaining the different parts of the script.
+`:star:` In the following, I will be explaining the different parts of the script 
+`extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_
 
 |
 
