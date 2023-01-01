@@ -19,14 +19,13 @@ Extract DOB, birthplace, DOD and deathplace
  - DOD: Day of Death
  - The script can be found at `extract_born_and_died_from_infobox.py <./scripts/extract_born_and_died_from_infobox.py>`_.
 
-This is the environment on which the script was tested:
+This is the environment on which the `script <./scripts/extract_born_and_died_from_infobox.py>`_ was tested:
 
 * **Platform:** macOS
 * **Python**: version **3.7**
 * `beautifulsoup4 <https://www.crummy.com/software/BeautifulSoup/>`_: **v4.11.1**, for screen-scraping
 
-`:warning:` In order to run the script, you need first to have a folder with all the Wikipedia pages (\*.html) you want to parse. Then, you need
-to give the path to this folder to the script, like this::
+`:warning:` In order to run the script ``extract_from_infobox.py``, you need first to have a folder with all the Wikipedia pages (\*.html) you want to parse. Then, you need to give the path to this folder to the script, like this::
 
  $ python extract_from_infobox.py ~/Data/wikipedia/physicists
 
